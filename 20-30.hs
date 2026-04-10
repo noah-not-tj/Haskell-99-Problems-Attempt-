@@ -14,3 +14,15 @@ main :: IO ()
 main = do
   print (fst $ randomPermute [1..10] $ mkStdGen 111)
 
+
+--26 k combinations of a list 
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations _ [] = []
+combinations n (x:xs) = 
+  (map (x:) $ combinations (n-1) xs )++ combinations n xs
+
+
+main :: IO () 
+main = do
+  print (length $ combinations 3 [1..12])
