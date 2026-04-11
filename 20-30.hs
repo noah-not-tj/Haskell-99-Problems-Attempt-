@@ -22,7 +22,25 @@ combinations _ [] = []
 combinations n (x:xs) = 
   (map (x:) $ combinations (n-1) xs )++ combinations n xs
 
-
 main :: IO () 
 main = do
   print (length $ combinations 3 [1..12])
+
+--27 Group the elements of a set into disjoint subsets LIKE WHAT THE HECK?!?!!?
+
+--28 sort thing idk
+
+--29 Fibonacci Numbers
+fibonacci :: Integral a => a -> a
+fibonacci 1 = 1
+fibonacci 2 = 1
+fibonacci x = fibonacci (x-1) + fibonacci (x-2)
+
+main :: IO () 
+main = do
+  print $ map fibonacci [1..10]
+--[1,1,2,3,5,8,13,21,34,55]
+
+--Fibonacci numbers with matrix exponentiation
+
+
