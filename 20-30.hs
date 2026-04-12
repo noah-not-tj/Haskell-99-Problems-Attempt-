@@ -61,10 +61,10 @@ powM n m
 
 fibonacci' :: Integral a => a -> a
 fibonacci' n
-  | n <= 0 = 0
-  | n == 1 = 1
+  | n <= 1 = 1
+  | n == 2 = 1
   | otherwise =
-      let (_, fn, _, _) = powM (n-1) (1,1,1,0)
+      let (_, fn, _, _) = powM (n) (1,1,1,0)
       in fn
 
 main :: IO ()
@@ -108,4 +108,9 @@ main :: IO ()
 main = do
   let cp = coprime 1173 1547
   print cp
+
+--totient NOT EXPECTED APPROACH
+
+
+-- List of prime factors
 
