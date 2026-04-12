@@ -41,7 +41,7 @@ main = do
   print $ map fibonacci [1..10]
 --[1,1,2,3,5,8,13,21,34,55]
 
---Fibonacci numbers with matrix exponentiation
+--30 Fibonacci numbers with matrix exponentiation
 type Matrix a = (a,a,a,a)
 
 multM :: Num a => Matrix a -> Matrix a -> Matrix a
@@ -70,7 +70,7 @@ fibonacci' n
 main :: IO ()
 main = print $ map fibonacci' [1..10]
 
---isprime
+-- 31 isprime
 isqrt :: Integral a => a-> a
 isqrt = floor . sqrt . fromIntegral
      
@@ -84,7 +84,7 @@ main = do
   let yay = isPrime 15
   print yay
 
---gcd 
+--32 gcd 
 myGCD :: Integral a => a -> a -> a
 myGCD 0 x = x
 myGCD x 0 = x
@@ -95,7 +95,7 @@ main = do
   let gc = myGCD 221 559
   print gc 
 
--- coprime
+-- 33 coprime
 prime :: Integral a => a -> a -> Bool
 coprime x y = myGCD x y == 1
 
