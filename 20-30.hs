@@ -70,4 +70,42 @@ fibonacci' n
 main :: IO ()
 main = print $ map fibonacci' [1..10]
 
+--isprime
+isqrt :: Integral a => a-> a
+isqrt = floor . sqrt . fromIntegral
+     
+isPrime :: Integral a => a -> Bool
+isPrime k
+  |k>1 = null [x | x <- [2..isqrt k], k `mod` x == 0]
+  |otherwise = False
+
+main :: IO ()
+main = do
+  let yay = isPrime 15
+  print yay
+
+--gcd 
+myGCD :: Integral a => a -> a -> a
+myGCD 0 x = x
+myGCD x 0 = x
+myGCD a b = myGCD b $ a `rem` b
+
+main :: IO ()
+main = do
+  let gc = myGCD 221 559
+  print gc 
+
+-- coprime
+prime :: Integral a => a -> a -> Bool
+coprime x y = myGCD x y == 1
+
+myGCD :: Integral a => a -> a -> a
+myGCD 0 x = x
+myGCD x 0 = x
+myGCD a b = myGCD b ( a `rem` b )
+
+main :: IO ()
+main = do
+  let cp = coprime 1173 1547
+  print cp
 
