@@ -42,5 +42,32 @@ main = do
 --[1,1,2,3,5,8,13,21,34,55]
 
 --Fibonacci numbers with matrix exponentiation
+type Matrix a = (a,a,a,a)
+
+multM :: Num a => Matrix a -> Matrix a -> Matrix a
+multM (a,b,c,d) (e,f,g,h) =
+  ( a*e + b*g
+  , a*f + b*h
+  , c*e + d*g
+  , c*f + d*h
+  )
+
+powM :: (Integral n, Num a) => n -> Matrix a -> Matrix a
+powM 0 _ = (1,0,0,1)
+powM 1 m = m
+powM n m
+  | even n = powM (n `div` 2) (multM m m)
+  | otherwise = multM m (powM (n-1) m)
+
+fibonacci' :: Integral a => a -> a
+fibonacci' n
+  | n <= 0 = 0
+  | n == 1 = 1
+  | otherwise =
+      let (_, fn, _, _) = powM (n-1) (1,1,1,0)
+      in fn
+
+main :: IO ()
+main = print $ map fibonacci' [1..10]
 
 
