@@ -109,8 +109,39 @@ main = do
   let cp = coprime 1173 1547
   print cp
 
---totient NOT EXPECTED APPROACH
+--totient Probably not optimal
+import Data.List (nub)
 
+totient :: Integral a => a -> a 
+totient 1 = 1
+totient n = 
+    let p = factors 2 n 
+        g = nub p 
+    in n * product [p - 1 | p <- g] `div` product g
+
+factors :: Integral a => a -> a -> [a]
+factors _ 1 = []
+factors base n 
+    | base * base > n = [n]
+    | n `mod` base == 0 = base : factors base (n `div` base)
+    | otherwise = factors (base + 1) n
+
+main :: IO ()
+main = do 
+    let cp = totient 20
+    print cp 
 
 -- List of prime factors
+--(Just reused the same thing from the last problem)
+factors :: Integral a => a -> a -> [a]
+factors _ 1 = []
+factors base n 
+    | base * base > n = [n]
+    | n `mod` base == 0 = base : factors base (n `div` base)
+    | otherwise = factors (base + 1) n
+
+main :: IO ()
+main = do 
+    let cp = factors 2 315
+    print cp 
 
