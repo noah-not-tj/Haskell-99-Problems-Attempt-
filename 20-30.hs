@@ -109,7 +109,7 @@ main = do
   let cp = coprime 1173 1547
   print cp
 
---totient Probably not optimal
+-- 34 totient, Probably not optimal but oh well
 import Data.List (nub)
 
 totient :: Integral a => a -> a 
@@ -131,7 +131,7 @@ main = do
     let cp = totient 20
     print cp 
 
--- List of prime factors
+-- 35 List of prime factors
 --(Just reused the same thing from the last problem)
 factors :: Integral a => a -> a -> [a]
 factors _ 1 = []
@@ -145,3 +145,74 @@ main = do
     let cp = factors 2 315
     print cp 
 
+--36 runtime encode the primes
+primeFactorsMultiplicity :: Integral a => a -> [(a, a)]
+primeFactorsMultiplicity n = 
+  let list = primeFactors n
+  in encode list
+    
+primeFactors :: Integral a => a -> [a]
+primeFactors n = factors 2 n
+
+factors :: Integral a => a -> a -> [a]
+factors _ 1 = []
+factors base n 
+    | base * base > n = [n]
+    | n `mod` base == 0 = base : factors base (n `div` base)
+    | otherwise = factors (base + 1) n
+
+encode :: Integral a => [a] -> [(a, a)]
+encode = map (\xs -> (head xs, fromIntegral (length xs))) . group
+
+main :: IO ()
+main = do 
+    let cp = primeFactorsMultiplicity 315
+    print cp 
+
+-- 37 apparently I did 34 the right but unexpected way...
+
+--38 
+
+--39 list of primes from x to yed
+
+isqrt :: Integral a => a-> a
+isqrt = floor . sqrt . fromIntegral
+     
+isPrime :: Integral a => a -> Bool
+isPrime k
+  |k>1 = null [x | x <- [2..isqrt k], k `mod` x == 0]
+  |otherwise = False
+  
+primesR :: Integral a => a -> a -> [a]
+primesR x y = 
+  [x | x <- [x..y], isPrime x]
+
+main :: IO ()
+main = do 
+    let cp = primesR 10 20
+    print cp 
+
+-- 40 !!!! Goldbach's Conjecture oh heck yeah
+
+isqrt :: Integral a => a-> a
+isqrt = floor . sqrt . fromIntegral
+     
+isPrime :: Integral a => a -> Bool
+isPrime k
+  |k>1 = null [x | x <- [2..isqrt k], k `mod` x == 0]
+  |otherwise = False
+  
+primesR :: Integral a => a -> a -> [a]
+primesR x y = 
+  [x | x <- [x..y], isPrime x]
+
+goldbach :: Integral a => a -> (a, a)
+goldbach n = 
+  let list = primesR 1 n
+  in head [(x, y) | x <- primesR 1 n, 
+                    let y = n-x, isPrime y]
+
+main :: IO ()
+main = do 
+    let cp = goldbach 12
+    print cp 
