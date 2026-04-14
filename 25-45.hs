@@ -1,5 +1,4 @@
 --25 random permutation of list
-
 import System.Random
 
 randomPermute :: RandomGen g => [a] -> g -> ([a], g)
@@ -13,7 +12,6 @@ randomPermute xs g =
 main :: IO () 
 main = do
   print (fst $ randomPermute [1..10] $ mkStdGen 111)
-
 
 --26 k combinations of a list 
 combinations :: Int -> [a] -> [[a]]
@@ -174,7 +172,6 @@ main = do
 --38 
 
 --39 list of primes from x to yed
-
 isqrt :: Integral a => a-> a
 isqrt = floor . sqrt . fromIntegral
      
@@ -193,7 +190,6 @@ main = do
     print cp 
 
 -- 40 !!!! Goldbach's Conjecture oh heck yeah
-
 isqrt :: Integral a => a-> a
 isqrt = floor . sqrt . fromIntegral
      
@@ -216,3 +212,4 @@ main :: IO ()
 main = do 
     let cp = goldbach 12
     print cp 
+
