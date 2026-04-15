@@ -242,5 +242,21 @@ main = do
     print cp 
 
 -- 42 multiplicative Inverse
+multiplicativeInverse :: Integral a => a -> a -> Maybe a
+multiplicativeInverse a b
+  |gcd a b /= 1 = Nothing
+  |otherwise = Just $ fst (extendedEuclid a b)
+    
+extendedEuclid :: Integral a => a -> a -> (a, a)
+extendedEuclid a 0 = (1, 0)
+extendedEuclid a b =
+  let (q, r) = a `quotRem` b
+      (s, t) = extendedEuclid b r
+  in (t, s - q * t)
+  
+main :: IO ()
+main = do 
+    let cp = multiplicativeInverse 48 93--filter (\(m,n) -> m > 100 && n > 100) $ goldbachList 2 3000
+    print cp 
 
 --43 Gaussisan Integer Divisibility 
