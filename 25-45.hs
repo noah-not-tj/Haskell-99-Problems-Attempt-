@@ -213,3 +213,34 @@ main = do
     let cp = goldbach 12
     print cp 
 
+-- 41 goldbach's evil list
+isqrt :: Integral a => a-> a
+isqrt = floor . sqrt . fromIntegral
+     
+isPrime :: Integral a => a -> Bool
+isPrime k
+  |k>1 = null [x | x <- [2..isqrt k], k `mod` x == 0]
+  |otherwise = False
+  
+primesR :: Integral a => a -> a -> [a]
+primesR x y = 
+  [x | x <- [x..y], isPrime x]
+
+goldbach :: Integral a => a -> (a, a)
+goldbach n = 
+  let list = primesR 1 n
+  in head [(x, y) | x <- primesR 1 n, 
+                    let y = n-x, isPrime y]
+                    
+goldbachList :: Integral a => a -> a -> [(a, a)]
+goldbachList low high = [goldbach n | n <- [low..high],
+                                     even n, n > 2]
+
+main :: IO ()
+main = do 
+    let cp = filter (\(m,n) -> m > 100 && n > 100) $ goldbachList 2 3000
+    print cp 
+
+-- 42 multiplicative Inverse
+
+--43 Gaussisan Integer Divisibility 

@@ -2,3 +2,4 @@ come back to:
     38 - highly totient numbers
     27 grouping or something 
     28 idk
+    42 multiplicative Inverse
