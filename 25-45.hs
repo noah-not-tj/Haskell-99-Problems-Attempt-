@@ -256,7 +256,8 @@ extendedEuclid a b =
   
 main :: IO ()
 main = do 
-    let cp = multiplicativeInverse 48 93--filter (\(m,n) -> m > 100 && n > 100) $ goldbachList 2 3000
+    let cp = multiplicativeInverse 48 93
     print cp 
 
 --43 Gaussisan Integer Divisibility 
+
