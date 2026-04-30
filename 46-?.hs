@@ -51,4 +51,27 @@ main = do
     printTable cp 
     --putStrLn "|--------------------------|"
 
---47 
+--47 Universal Logic Gates
+nand' :: Bool -> Bool -> Bool
+nand' a b = not (a && b)
+
+evaluateCircuit :: [(Int, Int)] -> Bool -> Bool -> Bool
+evaluateCircuit gates a b = last $ evaluateNodes gates []
+  where 
+    evaluateNodes :: [(Int, Int)] -> [Bool] -> [Bool]
+    evaluateNodes [] list = list
+    evaluateNodes ((x,y):xs) list =
+      let valX = check x
+          valY = check y
+          curr_result = valX `nand'` valY
+      in evaluateNodes xs $ list ++ [curr_result]
+      where 
+        check :: Int -> Bool
+        check (-1) = a
+        check (-2) = b
+        check x    = list !! (x-1)
+        
+main :: IO ()
+main = do
+  let cp = evaluateCircuit [(-1,-1),(-2,-2),(1,2)] False False
+  print cp
