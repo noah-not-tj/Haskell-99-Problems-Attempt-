@@ -51,7 +51,7 @@ main = do
     printTable cp 
     --putStrLn "|--------------------------|"
 
---47 Universal Logic Gates
+--47 Universal Logic Gates (ABSOLUTE INSANITY)
 nand' :: Bool -> Bool -> Bool
 nand' a b = not (a && b)
 
