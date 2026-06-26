@@ -88,4 +88,48 @@ main = do
   let asdlfkj = encodeModified "aaaabccaadeeee" 
   print asdlfkj 
   
+11 decode encoded list 
+data Encoding a = Single a | Multiple Int a
+  deriving (Show)
+
+firstgroup :: Eq a => [a] -> ([a], [a])
+firstgroup (x : ys@(y : _)) 
+  | x == y = let (d, r) = firstgroup ys in (x : d, r)
+  | otherwise = ([x], ys)
+firstgroup lonely = (lonely, [])
+
+pack :: Eq a => [a] -> [[a]]
+pack []  = []
+pack xs = duplicates : pack remainder
+  where (duplicates, remainder) = firstgroup xs
+ 
+len :: [a] -> (Int, a)
+len xs@(x:_) = (length xs, x)
+  
+encode :: Eq a => [a] -> [(Int, a)]
+encode [] = []
+encode xs = map len $ pack xs
+
+encodeblah :: Eq a => (Int, a) -> Encoding a
+encodeblah (num, x) 
+  | num > 1 = Multiple num x
+  | otherwise = Single x
+
+encodeModified :: Eq a => [a] -> [Encoding a]
+encodeModified [] = []
+encodeModified xs = map encodeblah $ encode xs
+
+decodiy :: Eq a => Encoding a -> [a]
+decodiy (Multiple n x) = replicate n x 
+decodiy (Single x) = [x] 
+
+decodeModified :: Eq a => [Encoding a] -> [a]
+decodeModified xs = foldl (++) [] blahblah
+  where blahblah = map decodiy xs 
+  
+main :: IO() 
+main = do
+  let asdlfkj = decodeModified [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
+  print asdlfkj 
+  
   
