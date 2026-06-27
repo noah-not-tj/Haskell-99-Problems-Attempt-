@@ -1,4 +1,5 @@
 come back to:
+    13 - modified encode challenge
     38 - highly totient numbers
     27 grouping or something 
     28 idk
