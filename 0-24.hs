@@ -131,5 +131,17 @@ main :: IO()
 main = do
   let asdlfkj = decodeModified [Multiple 4 'a',Single 'b',Multiple 2 'c',Multiple 2 'a',Single 'd',Multiple 4 'e']
   print asdlfkj 
+
+---------------13 didn't do
+
+14 duplicate
+dupli :: [a] -> [a]
+dupli [] = []
+dupli (x:xs) = x : x : dupli xs
+
+main :: IO() 
+main = do
+  let asdlfkj = dupli [1, 1, 2] 
+  print asdlfkj 
   
   
