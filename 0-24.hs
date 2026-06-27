@@ -158,4 +158,17 @@ main = do
   let asdlfkj = repli 3 "abc" 
   print asdlfkj 
 
+16 drop every N
+dropEvery :: [a] -> Int -> [a]
+dropEvery xs num = go xs num 1
+  where go :: [a] -> Int -> Int -> [a]
+        go [] _ _ = []
+        go (x:xs) num count
+          | count `mod` num == 0 = go xs num (count+1)
+          | otherwise = x : (go xs num (count+1) )
+
+main :: IO() 
+main = do
+  let asdlfkj = dropEvery "abcdefghik" 3
+  print asdlfkj 
   
