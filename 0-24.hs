@@ -143,5 +143,19 @@ main :: IO()
 main = do
   let asdlfkj = dupli [1, 1, 2] 
   print asdlfkj 
-  
+
+15 replicate
+repli :: Int -> [a] -> [a] 
+repli _ [] = []
+repli 0 _ = []
+repli num (x:xs) = (go num x ) ++ (repli num xs)
+  where go :: Int -> a -> [a]
+        go 0 _ = []
+        go num x = x : (go (num - 1) x)
+
+main :: IO() 
+main = do
+  let asdlfkj = repli 3 "abc" 
+  print asdlfkj 
+
   
