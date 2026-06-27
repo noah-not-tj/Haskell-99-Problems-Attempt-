@@ -180,5 +180,14 @@ main :: IO()
 main = do
   let asdlfkj = split "abcdefghik" 3
   print asdlfkj 
+
+18 slicing a list one liner tuff 
+slice :: [a] -> Int -> Int -> [a]
+slice xs start end = map snd $ filter (\(n, _) -> (n >= start) && (n <= end)) $ zip [1..] xs
+
+main :: IO() 
+main = do
+  let asdlfkj = slice "abcdefghijk" 3 7 
+  print asdlfkj 
   
   
