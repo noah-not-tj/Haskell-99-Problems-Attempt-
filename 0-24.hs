@@ -171,4 +171,14 @@ main :: IO()
 main = do
   let asdlfkj = dropEvery "abcdefghik" 3
   print asdlfkj 
+
+17 splitting a list (probably not expected approach)
+split :: [a] -> Int -> ([a], [a])
+split xs num = (take num xs, drop num xs)
+
+main :: IO() 
+main = do
+  let asdlfkj = split "abcdefghik" 3
+  print asdlfkj 
+  
   
