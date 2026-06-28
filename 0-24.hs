@@ -189,5 +189,19 @@ main :: IO()
 main = do
   let asdlfkj = slice "abcdefghijk" 3 7 
   print asdlfkj 
+
+19 rotate a list
+
+rotate :: [a] -> Int -> [a]
+rotate [] _ = []
+rotate xs num = 
+  let t = length xs
+      p = (t + num) `mod` t
+  in drop p xs ++ take p xs
+
+main :: IO() 
+main = do
+  let asdlfkj = rotate "abcdefghijk" 3 
+  print asdlfkj 
   
   
