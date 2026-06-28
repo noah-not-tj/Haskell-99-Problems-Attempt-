@@ -203,5 +203,67 @@ main :: IO()
 main = do
   let asdlfkj = rotate "abcdefghijk" 3 
   print asdlfkj 
+
+20 removeat
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n xs = (xs !! (n-1), take (n-1) xs  ++  drop n xs)
+
+main :: IO ()
+main = do
+  print $ removeAt 2 "abcdef"
+
+21 insert at 
+insertAt :: a -> [a] -> Int -> [a]
+insertAt y xs n = take (n-1) xs ++ ( y : drop (n-1) xs)
+
+main :: IO ()
+main = do
+  print $ insertAt 'X' "abcdef" 2
+
+22 list of numbers
+range :: Int -> Int -> [Int]
+range x y = 
+  let blah = take (y + 1) [0..]
+  in drop (x) blah
   
-  
+main :: IO ()
+main = do
+  print $ range 4 9
+
+23 pick n random things from a list (no duplicates for meeeeee)
+import System.Random
+
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n xs = (xs !! (n-1), take (n-1) xs  ++  drop n xs)
+
+randomSelect :: RandomGen g => [a] -> Int -> g -> ([a], g)
+randomSelect _ 0 g = ([], g)
+randomSelect xs num g = 
+  let (idx, g') = randomR (0, length xs - 1) g
+      next = randomSelect (snd $ removeAt (idx+1) xs) (num - 1) g'
+  in ((xs !! idx) : fst next, snd next)
+
+main :: IO ()
+main = do
+  print $ fst $ randomSelect "abcdefgh" 5 $ mkStdGen 111 
+
+24 lotto wow
+import System.Random
+
+randomDraw :: RandomGen g => Int -> Int -> g -> ([Int], g)
+randomDraw n maX g = randomSelect [1..maX] n g 
+
+removeAt :: Int -> [a] -> (a, [a])
+removeAt n xs = (xs !! (n-1), take (n-1) xs  ++  drop n xs)
+
+randomSelect :: RandomGen g => [a] -> Int -> g -> ([a], g)
+randomSelect _ 0 g = ([], g)
+randomSelect xs num g = 
+  let (idx, g') = randomR (0, length xs - 1) g
+      next = randomSelect (snd $ removeAt (idx+1) xs) (num - 1) g'
+  in ((xs !! idx) : fst next, snd next)
+
+main :: IO ()
+main = do
+  print $ fst $ randomDraw 6 49 $ mkStdGen 111
+ 
