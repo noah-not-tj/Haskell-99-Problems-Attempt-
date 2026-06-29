@@ -25,7 +25,7 @@ data Tree a = Empty | Branch a (Tree a) (Tree a)
 
 mirror :: Tree a -> Tree a -> Bool
 mirror Empty Empty = True
-mirror (Branch _ l1 l2) (Branch _ r1 r2) = (mirror l1 l2) && (mirror r1 r2)
+mirror (Branch _ l1 l2) (Branch _ r1 r2) = (mirror l1 r2) && (mirror l2 r1)
 mirror _ _ = False
 
 symmetric :: Tree a -> Bool
