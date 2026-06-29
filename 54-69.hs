@@ -87,3 +87,36 @@ symBalTrees n = filter symmetric (createBalancedTree n)
 main :: IO ()
 main = do
   print $ symBalTrees 5
+
+-- 59 height balanced trees
+data Tree a = Empty | Branch a (Tree a) (Tree a)
+  deriving (Show)
+  
+heightBalancedTrees :: Int -> [Tree ()]
+heightBalancedTrees n = filter checkHeight (generate n)
+  
+generate :: Int -> [Tree ()]
+generate 0 = [Empty]
+generate n = 
+  [Branch () l r 
+  | nL <- [0..(n-1)]
+  , nR <- [0..(n-1)]
+  , max nL nR == (n-1)
+  , l <- generate nL
+  , r <- generate nR
+  ]
+              
+checkHeight :: Tree () -> Bool
+checkHeight t = getHeight t /= -1
+
+getHeight :: Tree () -> Int
+getHeight Empty = 0
+getHeight (Branch _ l r) 
+  | lheight == -1 || rheight == -1  || abs (lheight - rheight ) > 1 = -1
+  | otherwise = (max lheight rheight) + 1
+    where lheight = getHeight l
+          rheight = getHeight r
+
+main :: IO ()
+main = do
+  print $ length $ heightBalancedTrees 4
