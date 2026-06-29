@@ -23,6 +23,11 @@ main = do
 data Tree a = Empty | Branch a (Tree a) (Tree a)
   deriving Show
 
+mirror :: Tree a -> Tree a -> Bool
+mirror Empty Empty = True
+mirror (Branch _ l1 l2) (Branch _ r1 r2) = (mirror l1 l2) && (mirror r1 r2)
+mirror _ _ = False
+
 symmetric :: Tree a -> Bool
 symmetric Empty = True
 symmetric (Branch _ l r) = mirror l r
@@ -51,3 +56,34 @@ main = do
   print cp
 
 -- 58 Symmetric and completely balanced binary trees
+data Tree a = Empty | Branch a (Tree a) (Tree a)
+  deriving (Show)
+  
+mirror :: Tree a -> Tree a -> Bool
+mirror Empty Empty = True
+mirror (Branch _ l1 l2) (Branch _ r1 r2) = (mirror l1 r2) && (mirror l2 r1)
+mirror _ _ = False
+
+symmetric :: Tree a -> Bool
+symmetric Empty = True
+symmetric (Branch _ l r) = mirror l r
+
+createBalancedTree :: Int -> [Tree ()]
+createBalancedTree 0 = [Empty]
+createBalancedTree n
+  | even n    = generate  (n `div` 2) ( (n `div` 2) - 1) 
+                  ++ generate ( (n `div` 2) - 1) (n `div` 2)
+                  
+  | otherwise = generate (n `div` 2) (n `div` 2)
+  
+generate :: Int -> Int -> [Tree ()]
+generate x y = [Branch () l r | l <- ltrees, r <- rtrees]
+  where ltrees = createBalancedTree x
+        rtrees = createBalancedTree y 
+        
+symBalTrees :: Int -> [Tree ()]
+symBalTrees n = filter symmetric (createBalancedTree n)
+
+main :: IO ()
+main = do
+  print $ symBalTrees 5
