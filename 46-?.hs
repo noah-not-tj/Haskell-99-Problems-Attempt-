@@ -75,3 +75,32 @@ main :: IO ()
 main = do
   let cp = evaluateCircuit [(-1,-1),(-2,-2),(1,2)] False False
   print cp
+
+--51 Gray Codes (binary is sooooo fun in haskell)
+intToBinary :: Integral a => a -> [a]
+intToBinary 0 = [0]
+intToBinary n = reverse $ helper n
+  where
+    helper 0 = []
+    helper x = let (d, m) = x `divMod` 2
+               in m : helper d 
+               
+-- G = B ^ (B >> 1)
+binaryToGray :: Integral a => [a] -> [a]
+binaryToGray [] = []
+binaryToGray bin = xor $ lsl bin
+  where 
+    lsl ys = 0 : init ys
+    
+    xor = zipWith (\x y -> if x /= y then 1 else 0) bin 
+
+gray :: Int -> [String]
+gray x = map (concat . map show . pad ) (map blah [0..(2^x - 1)])
+  where 
+    blah n = binaryToGray $ intToBinary n
+    pad xs = replicate (x - length xs) 0 ++ xs
+
+main :: IO() 
+main = do
+  print $ gray 3
+  
