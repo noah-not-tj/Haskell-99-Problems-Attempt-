@@ -76,7 +76,7 @@ main = do
   let cp = evaluateCircuit [(-1,-1),(-2,-2),(1,2)] False False
   print cp
 
---51 Gray Codes (binary is sooooo fun in haskell)
+--49 Gray Codes (binary is sooooo fun in haskell)
 intToBinary :: Integral a => a -> [a]
 intToBinary 0 = [0]
 intToBinary n = reverse $ helper n
