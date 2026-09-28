@@ -103,4 +103,45 @@ gray x = map (concat . map show . pad ) (map blah [0..(2^x - 1)])
 main :: IO() 
 main = do
   print $ gray 3
+
+--50 Huffman Codes (shrug shrug shrug fun)
+import Data.List (sortBy)
+import Data.Ord (comparing)
+
+data Huffman a = Leaf Int a | Fork Int (Huffman a) (Huffman a)
+  deriving (Show, Eq)
+  
+weight :: Huffman Char -> Int
+weight (Leaf w _)   = w
+weight (Fork w _ _) = w
+
+merge :: Huffman Char -> Huffman Char -> Huffman Char
+merge x y = Fork (weight x + weight y) x y
+
+huffman :: [(Char, Int)] -> [(Char, String)]
+huffman xs = format (encode (sortBy (comparing weight) (list xs)))
+  where 
+    list = map (\(x, y) -> Leaf y x)
+    
+format :: Huffman Char -> [(Char, String)]
+format (Leaf _ x) = [(x, "")];
+format (Fork _ xl xr) = map (\(c, s) -> (c, "0" ++ s)) (format xl) ++
+                        map (\(c, s) -> (c, "1" ++ s)) (format xr)
+
+encode :: [(Huffman Char)] -> Huffman Char
+encode [x] = x
+encode list = 
+  -- get two lowest
+  let (x:y:xs) = list
+  -- merge
+      t = merge x y
+  -- readjust weights
+     in encode $ sortBy (comparing weight) (t : xs)
+
+main :: IO() 
+main = do
+  print $ huffman [('a',45),('b',13),('c',12),('d',16),('e',9),('f',5)] 
+  
+  
+  
   
