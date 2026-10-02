@@ -142,6 +142,26 @@ main :: IO()
 main = do
   print $ huffman [('a',45),('b',13),('c',12),('d',16),('e',9),('f',5)] 
   
-  
-  
-  
+--50 politics 
+import System.Random 
+import Data.List (sortOn)
+
+shuffleList :: RandomGen g => [a] -> g -> ([a], g)
+shuffleList xs gen =
+  let (g1, g2) = split gen
+      weights = take (length xs) (randoms g1 :: [Int])
+      shuffled = map snd (sortOn fst (zip weights xs))
+  in (shuffled, g2)
+      
+corrupt :: RandomGen g => g -> Int -> [Bool] -> [Bool]
+corrupt g num list = 
+  let (shuffled, _) = shuffleList [1..(length list)] g
+      indexes = take num shuffled
+      zipped = zip [1..(length list)] list
+      flipped = map (\(id, val) -> if (id `notElem` indexes) then (id, val) else (id, not val)) (zipped)
+  in (map snd flipped)
+
+main :: IO() 
+main = do
+  print $ corrupt (mkStdGen 111) 2 [False, True, True, False, True]
+
